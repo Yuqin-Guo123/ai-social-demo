@@ -42,6 +42,11 @@
       left: 50%;
       top: 50%;
       transform: translate(-50%, -50%);
+      opacity: 0;
+pointer-events: none;
+transform: translate(-50%, -50%) scale(0.96);
+
+transition: 0.3s ease;
 
       width: 720px;
       padding: 28px;
@@ -54,6 +59,11 @@
       color: white;
       text-shadow: 0 1px 6px rgba(0,0,0,0.35);
     }
+    .result-board.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, -50%) scale(1);
+}
 
     .result-title {
       font-size: 30px;
@@ -206,6 +216,39 @@
       80% { opacity: 1; }
       100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
     }
+    .ai-tip {
+  position: absolute;
+
+  right: 120px;
+  top: 108px;
+
+  padding: 12px 18px;
+
+  border-radius: 18px;
+
+  background: rgba(255,255,255,0.18);
+  border: 1px solid rgba(255,255,255,0.35);
+
+  backdrop-filter: blur(12px);
+
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+
+  text-shadow: 0 1px 5px rgba(0,0,0,0.35);
+
+  animation: tipFloat 2s ease-in-out infinite;
+}
+
+@keyframes tipFloat {
+  0%,100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-6px);
+  }
+}
   </style>
 </head>
 
@@ -217,6 +260,9 @@
       <span class="ai-wave"></span>
       <img src="images/ai助手icon.png" alt="AI助手" />
     </button>
+    <div class="ai-tip">
+  检测到适合长期组队的玩家
+</div>
 
     <section class="result-board">
       <h1 class="result-title">赛后结算 · AI关系分析</h1>
@@ -257,6 +303,8 @@
     const friendBtn = document.getElementById("friendBtn");
     const teamBtn = document.getElementById("teamBtn");
     const assistantBtn = document.getElementById("assistantBtn");
+    const resultBoard =
+document.querySelector(".result-board");
 
     function showToast(text) {
       toast.textContent = text;
@@ -280,9 +328,9 @@
       showToast("🤝 已发送下局组队邀请");
     });
 
-    assistantBtn.addEventListener("click", () => {
-      showToast("AI建议：该玩家适合长期组队");
-    });
+   assistantBtn.addEventListener("click", () => {
+  resultBoard.classList.add("show");
+});
   </script>
 </body>
 </html>
