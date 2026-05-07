@@ -52,8 +52,8 @@ height: 72px;
 }
 
 .ai-button img {
-  width: 250px;
-height: 250px;
+  width: 200px;
+height: 200px;
 
   object-fit: contain;
 
@@ -66,8 +66,8 @@ height: 250px;
 .ai-wave {
   position: absolute;
 
-  width: 200px;
-height: 200px;
+  width: 150px;
+height: 150px;
 
   border-radius: 50%;
 
