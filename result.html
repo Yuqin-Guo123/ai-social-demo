@@ -228,6 +228,35 @@ transition: 0.3s ease;
     transform: translateY(-6px);
   }
 }
+    .close-result {
+  position: absolute;
+
+  top: 18px;
+  right: 22px;
+
+  width: 42px;
+  height: 42px;
+
+  border: none;
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.12);
+
+  color: white;
+
+  font-size: 28px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+
+  transition: 0.2s;
+}
+
+.close-result:hover {
+  background: rgba(255,255,255,0.22);
+}
   </style>
 </head>
 
@@ -243,6 +272,7 @@ transition: 0.3s ease;
 </div>
 
     <section class="result-board">
+      <button class="close-result" id="closeResult">×</button>
 
       <div class="ai-recommend">
         <div class="recommend-card">
@@ -277,6 +307,8 @@ transition: 0.3s ease;
     const assistantBtn = document.getElementById("assistantBtn");
     const resultBoard =
 document.querySelector(".result-board");
+    const closeResult =
+document.getElementById("closeResult");
 
     function showToast(text) {
       toast.textContent = text;
@@ -302,6 +334,9 @@ document.querySelector(".result-board");
 
    assistantBtn.addEventListener("click", () => {
   resultBoard.classList.add("show");
+});
+    closeResult.addEventListener("click", () => {
+  resultBoard.classList.remove("show");
 });
   </script>
 </body>
