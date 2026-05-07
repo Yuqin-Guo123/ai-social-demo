@@ -22,17 +22,72 @@ body {
   position: absolute;
   left: 42px;
   bottom: 38px;
-  padding: 14px 22px;
-  border: 1px solid rgba(170, 190, 255, 0.9);
-  border-radius: 18px;
-  background: rgba(80, 80, 180, 0.55);
-  color: #fff;
-  font-size: 18px;
+
+  width: 90px;
+  height: 90px;
+
+  border: none;
+  background: transparent;
   cursor: pointer;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 0 18px rgba(130, 150, 255, 0.8);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
+.ai-button img {
+  width: 78px;
+  height: 78px;
+  object-fit: contain;
+
+  position: relative;
+  z-index: 2;
+
+  animation: aiFloat 2s ease-in-out infinite;
+}
+
+.ai-wave {
+  position: absolute;
+
+  width: 78px;
+  height: 78px;
+
+  border-radius: 50%;
+
+  border: 2px solid rgba(130, 170, 255, 0.7);
+
+  animation: wavePulse 2s infinite;
+}
+
+@keyframes wavePulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.9;
+  }
+
+  70% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes aiFloat {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.06);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
 .ai-panel {
   position: absolute;
   top: 60px;
