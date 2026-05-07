@@ -43,7 +43,7 @@ body {
   bottom: 28px;
 
   width: 72px;
-  height: 72px;
+height: 72px;
 
   border: none;
   background: transparent;
@@ -58,8 +58,8 @@ body {
 }
 
 .ai-button img {
-  width: 62px;
-  height: 62px;
+  width: 95px;
+height: 95px;
 
   object-fit: contain;
 
@@ -72,8 +72,8 @@ body {
 .ai-wave {
   position: absolute;
 
-  width: 62px;
-  height: 62px;
+  width: 95px;
+height: 95px;
 
   border-radius: 50%;
 
