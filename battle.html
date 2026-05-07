@@ -7,6 +7,19 @@
   <link rel="stylesheet" href="style.css" />
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      font-family: "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", sans-serif;
+      background: #000;
+    }
+
     .battle-screen {
       position: relative;
       width: 100vw;
@@ -18,131 +31,139 @@
       overflow: hidden;
     }
 
-    /* AI助手：一直浮在右上角 */
+    /* AI助手：右上角固定 */
     .battle-screen .ai-button {
       position: absolute;
-      right: 24px;
+      right: 34px;
       top: 92px;
       left: auto;
       bottom: auto;
-
-      width: 90px;
-      height: 90px;
+      width: 82px;
+      height: 82px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
       z-index: 80;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .battle-screen .ai-button img {
-      width: 88px;
-      height: 88px;
+      width: 78px;
+      height: 78px;
+      object-fit: contain;
+      position: relative;
+      z-index: 2;
+      animation: aiFloat 2s ease-in-out infinite;
     }
 
     .battle-screen .ai-wave {
-      width: 82px;
-      height: 82px;
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid rgba(190, 205, 255, 0.85);
+      animation: wavePulse 2s infinite;
     }
 
-    /* 左侧小箭头 */
-    .battle-screen .chat-toggle {
+    @keyframes wavePulse {
+      0% { transform: scale(1); opacity: 0.9; }
+      70% { transform: scale(1.55); opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    @keyframes aiFloat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    /* 右侧展开箭头 */
+    .chat-toggle {
       position: absolute;
-     right: 24px;
-top: 190px;
-
-left: auto;
-bottom: auto;
-
+      right: 0;
+      top: 185px;
       width: 38px;
       height: 78px;
-
-      border: 1px solid rgba(255,255,255,0.35);
-     border-right: none;
-border-radius: 18px 0 0 18px;
-
+      border: 1px solid rgba(255,255,255,0.4);
+      border-right: none;
+      border-radius: 18px 0 0 18px;
       background: rgba(255,255,255,0.22);
       backdrop-filter: blur(12px);
-
       color: white;
       font-size: 34px;
       font-weight: bold;
-
       cursor: pointer;
-      z-index: 60;
+      z-index: 75;
     }
 
-    /* 队伍频道：默认藏在左边 */
-    .battle-screen .team-chat {
+    /* 队伍频道：默认藏在右侧 */
+    .team-chat {
       position: absolute;
-      left: 24px;
-      bottom: 34px;
-
-      width: 420px;
+      right: 24px;
+      top: 210px;
+      width: 390px;
       padding: 16px;
-
       border-radius: 22px;
-
       background: rgba(255,255,255,0.16);
-      border: 1px solid rgba(255,255,255,0.28);
-      backdrop-filter: blur(12px);
-
+      border: 1px solid rgba(255,255,255,0.32);
+      backdrop-filter: blur(14px);
       color: #fff;
       text-shadow: 0 1px 5px rgba(0,0,0,0.35);
-
       z-index: 70;
-
-      transform: translateX(470px);
+      transform: translateX(440px);
       transition: transform 0.35s ease;
     }
 
-    /* 展开状态 */
-    .battle-screen .team-chat.show {
+    .team-chat.show {
       transform: translateX(0);
     }
 
-    .battle-screen .team-chat-title {
+    .team-chat-title {
       display: flex;
       justify-content: space-between;
       align-items: center;
-
       font-size: 16px;
       font-weight: 800;
       margin-bottom: 10px;
     }
 
-    .battle-screen .chat-close {
+    .chat-close {
       border: none;
       background: transparent;
       color: white;
-      font-size: 28px;
+      font-size: 26px;
       cursor: pointer;
     }
 
-    .battle-screen .chat-line {
+    .chat-line {
       margin: 8px 0;
-      font-size: 15px;
+      font-size: 14px;
+      line-height: 1.45;
     }
 
-    .battle-screen .ai-input-box {
+    .ai-input-box {
       margin-top: 12px;
       padding: 12px;
-
       border-radius: 16px;
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.22);
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.24);
     }
 
-    .battle-screen .ai-input-title {
+    .ai-input-title {
       margin: 0 0 8px;
       font-size: 14px;
       font-weight: 700;
     }
 
-    .battle-screen .voice-options {
+    .voice-options {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
       margin-bottom: 10px;
     }
 
-    .battle-screen .battle-voice-btn {
+    .battle-voice-btn {
       padding: 8px 10px;
       border-radius: 12px;
       border: 1px solid rgba(255,255,255,0.35);
@@ -153,47 +174,70 @@ border-radius: 18px 0 0 18px;
       backdrop-filter: blur(8px);
     }
 
-    .battle-screen .generated-message {
+    .generated-message {
       display: none;
       margin-top: 10px;
       padding: 12px;
-
       border-radius: 14px;
       background: rgba(255,255,255,0.22);
       border: 1px solid rgba(255,255,255,0.28);
-
       line-height: 1.45;
       font-size: 14px;
     }
 
-    .battle-screen .generated-message.show {
+    .generated-message.show {
       display: block;
     }
 
-    .battle-screen .send-btn {
+    .send-btn {
       display: none;
       margin-top: 10px;
-
       width: 100%;
       padding: 10px;
-
       border: none;
       border-radius: 14px;
-
       background: linear-gradient(
         135deg,
         rgba(255,220,240,0.48),
         rgba(210,220,255,0.35)
       );
-
       color: #fff;
       font-weight: 800;
       cursor: pointer;
       border: 1px solid rgba(255,255,255,0.4);
     }
 
-    .battle-screen .send-btn.show {
+    .send-btn.show {
       display: block;
+    }
+
+    .toast {
+      position: absolute;
+      left: 50%;
+      top: 45%;
+      transform: translate(-50%, -50%);
+      padding: 16px 30px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.22);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.35);
+      z-index: 100;
+      animation: pop 1.2s ease forwards;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes pop {
+      0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+      20% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+      80% { opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
     }
   </style>
 </head>
@@ -201,20 +245,20 @@ border-radius: 18px 0 0 18px;
 <body>
   <main class="battle-screen">
 
-    <!-- 左侧小箭头：点击展开队伍频道 -->
-    <button class="chat-toggle" id="chatToggle">›</button>
-
-    <!-- AI小助手：一直浮在右上角 -->
+    <!-- AI小助手：一直显示 -->
     <button class="ai-button" id="assistantBtn">
       <span class="ai-wave"></span>
       <img src="images/ai助手icon.png" alt="AI助手" />
     </button>
 
-    <!-- 队伍频道：默认隐藏，点击AI助手或箭头后展开 -->
+    <!-- 右侧箭头 -->
+    <button class="chat-toggle" id="chatToggle">›</button>
+
+    <!-- 队伍频道 -->
     <section class="team-chat" id="teamChat">
       <div class="team-chat-title">
         队伍频道
-        <button class="chat-close" id="chatClose">‹</button>
+        <button class="chat-close" id="chatClose">×</button>
       </div>
 
       <p class="chat-line">雨果：中路压力有点大。</p>
@@ -225,9 +269,9 @@ border-radius: 18px 0 0 18px;
         <p class="ai-input-title">对 AI 小助手说：</p>
 
         <div class="voice-options">
-          <button class="battle-voice-btn" data-action="soften">🎙 干嘛啊你别送了</button>
+          <button class="battle-voice-btn" data-action="soften">🎙 你别送了</button>
           <button class="battle-voice-btn" data-action="tactic">🎙 中路来一下</button>
-          <button class="battle-voice-btn" data-action="thanks">🎙 谢谢</button>
+          <button class="battle-voice-btn" data-action="thanks">🎙 刚刚多亏你</button>
         </div>
 
         <div class="generated-message" id="generatedMessage"></div>
@@ -251,22 +295,18 @@ border-radius: 18px 0 0 18px;
 
     let finalText = "";
 
-    // 点击左侧箭头，展开队伍频道
-    chatToggle.addEventListener("click", () => {
+    function openChat() {
       teamChat.classList.add("show");
-    });
+    }
 
-    // 点击AI助手，展开队伍频道
-    assistantBtn.addEventListener("click", () => {
-      teamChat.classList.add("show");
-    });
-
-    // 点击关闭按钮，收起队伍频道
-    chatClose.addEventListener("click", () => {
+    function closeChat() {
       teamChat.classList.remove("show");
-    });
+    }
 
-    // 三个模拟语音按钮
+    assistantBtn.addEventListener("click", openChat);
+    chatToggle.addEventListener("click", openChat);
+    chatClose.addEventListener("click", closeChat);
+
     document.querySelectorAll(".battle-voice-btn").forEach((btn) => {
       btn.addEventListener("click", () => {
         const action = btn.dataset.action;
@@ -300,7 +340,6 @@ border-radius: 18px 0 0 18px;
       });
     });
 
-    // 确认发送
     sendBtn.addEventListener("click", () => {
       sentMessage.textContent = "雨果：" + finalText;
 
