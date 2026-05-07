@@ -1,1 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI语音社交助手 Demo</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="game-screen">
+    <button class="ai-button" id="openAI">🤖 AI助手</button>
 
+    <section class="ai-panel" id="aiPanel">
+      <div class="panel-header">
+        <h2>AI语音社交助手</h2>
+        <button id="closeAI">×</button>
+      </div>
+
+      <div class="section">
+        <p class="label">当前场景</p>
+        <p>大厅阶段 · 匹配前</p>
+      </div>
+
+      <button class="voice-btn" id="voiceBtn">🎙 模拟语音：给夏日畅想家送一朵花</button>
+
+      <div class="ai-card hidden" id="aiResult">
+        <p class="label">AI识别结果</p>
+        <p>对象：夏日畅想家</p>
+        <p>行为：赠送礼物</p>
+        <p>礼物：鲜花 × 1</p>
+        <button class="confirm-btn" id="confirmBtn">确认送礼</button>
+      </div>
+
+      <div class="success-card hidden" id="successResult">
+        ✅ 已向「夏日畅想家」赠送鲜花，好感度 +5
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
