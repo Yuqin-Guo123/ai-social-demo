@@ -4,7 +4,11 @@
 
 body {
   margin: 0;
-  font-family: "Microsoft YaHei", Arial, sans-serif;
+ font-family:
+"Hiragino Sans GB",
+"Heiti SC",
+"Microsoft YaHei",
+sans-serif;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
@@ -110,21 +114,22 @@ height: 150px;
   top: 70px;
   right: 55px;
 
-  width: 370px;
+  width: 390px;
 
   padding: 22px;
 
-  border-radius: 24px;
+  border-radius: 28px;
 
-  background: rgba(17, 19, 45, 0.92);
+  background: rgba(255,255,255,0.18);
 
-  color: white;
+  backdrop-filter: blur(18px);
 
-  border: 1px solid rgba(185, 200, 255, 0.65);
+  border: 1px solid rgba(255,255,255,0.28);
 
-  box-shadow: 0 0 32px rgba(130, 150, 255, 0.65);
+  box-shadow:
+  0 8px 30px rgba(180,160,255,0.12);
 
-  backdrop-filter: blur(12px);
+  color: #2f2f38;
 
   transform: translateX(470px);
 
@@ -159,19 +164,21 @@ height: 150px;
 .scene-card,
 .ai-card,
 .success-card {
-  margin-top: 20px;
+  margin-top: 18px;
 
   padding: 16px;
 
-  border-radius: 16px;
+  border-radius: 18px;
 
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255,255,255,0.22);
+
+  border: 1px solid rgba(255,255,255,0.2);
 }
 
 .label {
   margin: 0 0 8px;
 
-  color: #c9d1ff;
+  color: #6d6688;
 
   font-weight: bold;
 }
@@ -196,11 +203,31 @@ height: 150px;
 }
 
 .voice-btn {
-  background: linear-gradient(135deg, #6f75ff, #a56cff);
+  background:
+  linear-gradient(
+    135deg,
+    rgba(255,255,255,0.32),
+    rgba(255,255,255,0.18)
+  );
+
+  border: 1px solid rgba(255,255,255,0.35);
+
+  color: #3f3f4f;
+
+  backdrop-filter: blur(10px);
 }
 
 .confirm-btn {
-  background: linear-gradient(135deg, #ff8bc0, #ffb16b);
+  background:
+  linear-gradient(
+    135deg,
+    rgba(255,220,240,0.42),
+    rgba(255,245,220,0.26)
+  );
+
+  border: 1px solid rgba(255,255,255,0.4);
+
+  color: #4a4152;
 }
 
 .success-card {
@@ -227,16 +254,21 @@ height: 150px;
 
   padding: 18px 34px;
 
-  border-radius: 18px;
+  border-radius: 22px;
 
-  background: rgba(20, 24, 55, 0.9);
+  background: rgba(255,255,255,0.22);
 
-  color: white;
+  backdrop-filter: blur(18px);
 
-  font-size: 26px;
+  border: 1px solid rgba(255,255,255,0.35);
+
+  color: #3d3550;
+
+  font-size: 24px;
   font-weight: bold;
 
-  box-shadow: 0 0 28px rgba(180, 150, 255, 0.9);
+  box-shadow:
+  0 8px 28px rgba(180,160,255,0.12);
 
   z-index: 50;
 
