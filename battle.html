@@ -219,6 +219,21 @@
     const sendBtn = document.getElementById("sendBtn");
     const sentMessage = document.getElementById("sentMessage");
     const toast = document.getElementById("toast");
+    const teamChat = document.getElementById("teamChat");
+const chatToggle = document.getElementById("chatToggle");
+const chatClose = document.getElementById("chatClose");
+const openAI = document.getElementById("openAI");
+    chatToggle.addEventListener("click", () => {
+  teamChat.classList.add("show");
+});
+
+chatClose.addEventListener("click", () => {
+  teamChat.classList.remove("show");
+});
+
+openAI.addEventListener("click", () => {
+  teamChat.classList.add("show");
+});
 
     let finalText = "";
 
