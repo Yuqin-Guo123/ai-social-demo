@@ -144,31 +144,31 @@
 <body>
   <main class="battle-screen">
 
-    <button class="ai-button" id="openAI">
-      <span class="ai-wave"></span>
-      <img src="images/ai助手icon.png" alt="AI助手" />
-    </button>
+    <button class="chat-toggle" id="chatToggle">›</button>
 
-    <section class="team-chat">
-      <div class="team-chat-title">队伍频道</div>
+<section class="team-chat" id="teamChat">
+  <div class="team-chat-title">
+    队伍频道
+    <button class="chat-close" id="chatClose">‹</button>
+  </div>
 
-      <p class="chat-line">雨果：中路压力有点大。</p>
-      <p class="chat-line">夏日畅想家：我马上来支援。</p>
-      <p class="chat-line" id="sentMessage">AI优化后的消息将在这里显示。</p>
+  <p class="chat-line">雨果：中路压力有点大。</p>
+  <p class="chat-line">夏日畅想家：我马上来支援。</p>
+  <p class="chat-line" id="sentMessage">AI优化后的消息将在这里显示。</p>
 
-      <div class="ai-input-box">
-        <p class="ai-input-title">对 AI 小助手说：</p>
+  <div class="ai-input-box">
+    <p class="ai-input-title">对 AI 小助手说：</p>
 
-        <div class="voice-options">
-          <button class="battle-voice-btn" data-action="soften">🎙 干嘛呢！你别送了</button>
-          <button class="battle-voice-btn" data-action="tactic">🎙 中路来一下</button>
-          <button class="battle-voice-btn" data-action="thanks">🎙 谢谢</button>
-        </div>
+    <div class="voice-options">
+      <button class="battle-voice-btn" data-action="soften">🎙 你别送了</button>
+      <button class="battle-voice-btn" data-action="tactic">🎙 中路来一下</button>
+      <button class="battle-voice-btn" data-action="thanks">🎙 刚刚多亏你</button>
+    </div>
 
-        <div class="generated-message" id="generatedMessage"></div>
-        <button class="send-btn" id="sendBtn">确认发送</button>
-      </div>
-    </section>
+    <div class="generated-message" id="generatedMessage"></div>
+    <button class="send-btn" id="sendBtn">确认发送</button>
+  </div>
+</section>
 
     <div class="toast hidden" id="toast">已发送</div>
   </main>
