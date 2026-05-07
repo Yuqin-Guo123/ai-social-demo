@@ -26,15 +26,21 @@
           <p>大厅阶段 · 匹配前</p>
         </div>
 
-        <button class="voice-btn" id="voiceBtn">🎙 模拟语音：给夏日畅想家送一朵花</button>
+       <div class="namecard">
+  <img src="images/夏日名片.png" alt="夏日畅想家名片">
+</div>
 
-        <div class="ai-card hidden" id="aiResult">
-          <p class="label">AI识别结果</p>
-          <p><b>对象：</b>夏日畅想家</p>
-          <p><b>行为：</b>赠送礼物</p>
-          <p><b>礼物：</b>鲜花 × 1</p>
-          <button class="confirm-btn" id="confirmBtn">确认送礼</button>
-        </div>
+<div class="voice-group">
+  <button class="voice-btn" data-action="gift">🎙 送十朵鲜花</button>
+  <button class="voice-btn" data-action="hello">🎙 打个招呼</button>
+  <button class="voice-btn" data-action="match">🎙 邀请一起匹配</button>
+</div>
+
+<div class="ai-card hidden" id="aiResult">
+  <p class="label">AI识别结果</p>
+  <div id="aiContent"></div>
+  <button class="confirm-btn" id="confirmBtn">确认执行</button>
+</div>
 
         <div class="success-card hidden" id="successResult">
           ✅ 已向「夏日畅想家」赠送鲜花，好感度 +5
