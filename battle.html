@@ -1,1 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>对局阶段 · AI语音社交助手</title>
+  <link rel="stylesheet" href="style.css" />
 
+  <style>
+    .battle-screen {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background-image: url("./images/lobby.jpg");
+      background-size: cover;
+      background-position: center;
+      overflow: hidden;
+    }
+
+    .battle-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(30, 25, 60, 0.28);
+      backdrop-filter: blur(2px);
+    }
+
+    .battle-title {
+      position: absolute;
+      left: 48px;
+      top: 42px;
+      color: white;
+      font-size: 34px;
+      font-weight: 800;
+      text-shadow: 0 3px 10px rgba(0,0,0,0.45);
+    }
+
+    .team-chat {
+      position: absolute;
+      left: 48px;
+      bottom: 42px;
+      width: 460px;
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.28);
+      backdrop-filter: blur(16px);
+      color: white;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.35);
+    }
+
+    .chat-line {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+
+    .ai-panel {
+      top: 32px;
+      right: 32px;
+      width: 360px;
+      padding: 18px;
+    }
+
+    .battle-tip {
+      margin: 12px 0 8px;
+      color: white;
+      font-size: 15px;
+      font-weight: 700;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.35);
+    }
+
+    .voice-group {
+      display: grid;
+      gap: 10px;
+    }
+
+    .voice-group .voice-btn {
+      margin-top: 0;
+      padding: 11px;
+      font-size: 14px;
+    }
+
+    .ai-card {
+      font-size: 14px;
+      line-height: 1.45;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="battle-screen">
+    <div class="battle-overlay"></div>
+
+    <div class="battle-title">对局阶段 · 团队沟通中</div>
+
+    <div class="team-chat">
+      <b>队伍频道</b>
+      <p class="chat-line">雨果：中路压力有点大。</p>
+      <p class="chat-line">夏日畅想家：我马上来支援。</p>
+      <p class="chat-line" id="sentMessage">AI优化后的消息将在这里显示。</p>
+    </div>
+
+    <button class="ai-button" id="openAI">
+      <span class="ai-wave"></span>
+      <img src="images/ai助手icon.png" alt="AI助手" />
+    </button>
+
+    <section class="ai-panel show" id="aiPanel">
+      <div class="panel-header">
+        <h2>AI语音社交助手</h2>
+        <button id="closeAI">×</button>
+      </div>
+
+      <div class="listen-card">
+        <p class="label">AI识别语音</p>
+        <p class="voice-text">“帮我把局内发言说得更合适”</p>
+      </div>
+
+      <p class="battle-tip">试试说：</p>
+
+      <div class="voice-group">
+        <button class="voice-btn" data-action="soften">🎙 你别送了</button>
+        <button class="voice-btn" data-action="tactic">🎙 中路来一下</button>
+        <button class="voice-btn" data-action="thanks">🎙 刚刚多亏你</button>
+      </div>
+
+      <div class="ai-card hidden" id="aiResult">
+        <p class="label">AI优化结果</p>
+        <div id="aiContent"></div>
+        <button class="confirm-btn" id="confirmBtn">发送到队伍频道</button>
+      </div>
+
+      <div class="success-card hidden" id="successResult">
+        ✅ 已发送优化后的队伍消息
+      </div>
+    </section>
+
+    <div class="toast hidden" id="toast">已发送</div>
+  </main>
+
+  <script>
+    const openAI = document.getElementById("openAI");
+    const closeAI = document.getElementById("closeAI");
+    const aiPanel = document.getElementById("aiPanel");
+    const aiResult = document.getElementById("aiResult");
+    const aiContent = document.getElementById("aiContent");
+    const confirmBtn = document.getElementById("confirmBtn");
+    const successResult = document.getElementById("successResult");
+    const toast = document.getElementById("toast");
+    const sentMessage = document.getElementById("sentMessage");
+
+    let finalText = "";
+
+    openAI.addEventListener("click", () => {
+      aiPanel.classList.add("show");
+    });
+
+    closeAI.addEventListener("click", () => {
+      aiPanel.classList.remove("show");
+    });
+
+    document.querySelectorAll(".voice-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const action = btn.dataset.action;
+        aiResult.classList.remove("hidden");
+        successResult.classList.add("hidden");
+
+        if (action === "soften") {
+          finalText = "这波我们先稳一下，我来支援你。";
+          aiContent.innerHTML = `
+            <p><b>玩家原话：</b>你别送了</p>
+            <p><b>识别意图：</b>提醒队友降低风险</p>
+            <p><b>AI优化：</b>“${finalText}”</p>
+            <p><b>优化方向：</b>降低冲突感，保留战术提醒。</p>
+          `;
+        }
+
+        if (action === "tactic") {
+          finalText = "敌方中路压线过深，建议集合中路打一波。";
+          aiContent.innerHTML = `
+            <p><b>玩家原话：</b>中路来一下</p>
+            <p><b>识别意图：</b>请求队友支援</p>
+            <p><b>AI优化：</b>“${finalText}”</p>
+            <p><b>优化方向：</b>将模糊语音转为结构化战术信息。</p>
+          `;
+        }
+
+        if (action === "thanks") {
+          finalText = "刚刚那波支援太关键了，多亏你救场！";
+          aiContent.innerHTML = `
+            <p><b>玩家原话：</b>刚刚多亏你</p>
+            <p><b>识别意图：</b>表达感谢与正向反馈</p>
+            <p><b>AI优化：</b>“${finalText}”</p>
+            <p><b>优化方向：</b>增强情绪表达，提升队友互动体验。</p>
+          `;
+        }
+      });
+    });
+
+    confirmBtn.addEventListener("click", () => {
+      sentMessage.textContent = "雨果：" + finalText;
+      successResult.classList.remove("hidden");
+
+      toast.textContent = "💬 已发送到队伍频道";
+      toast.classList.remove("hidden");
+      toast.style.animation = "none";
+
+      setTimeout(() => {
+        toast.style.animation = "pop 1.2s ease forwards";
+      }, 20);
+
+      setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 1200);
+    });
+  </script>
+</body>
+</html>
