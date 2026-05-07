@@ -111,33 +111,32 @@ height: 150px;
 .ai-panel {
   position: absolute;
 
-  top: 70px;
-  right: 55px;
+  top: 32px;
+  right: 32px;
 
-  width: 390px;
+  width: 320px;
 
-  padding: 22px;
+  padding: 18px;
 
-  border-radius: 28px;
+  border-radius: 24px;
 
-  background: rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.16);
 
   backdrop-filter: blur(18px);
 
-  border: 1px solid rgba(255,255,255,0.28);
+  border: 1px solid rgba(255,255,255,0.25);
 
   box-shadow:
-  0 8px 30px rgba(180,160,255,0.12);
+  0 8px 24px rgba(180,160,255,0.12);
 
   color: #2f2f38;
 
-  transform: translateX(470px);
+  transform: translateX(420px);
 
   transition: 0.35s ease;
 
   z-index: 30;
 }
-
 .ai-panel.show {
   transform: translateX(0);
 }
@@ -150,9 +149,8 @@ height: 150px;
 
 .panel-header h2 {
   margin: 0;
-  font-size: 22px;
+  font-size: 18px;
 }
-
 #closeAI {
   border: none;
   background: none;
@@ -173,8 +171,11 @@ height: 150px;
   background: rgba(255,255,255,0.22);
 
   border: 1px solid rgba(255,255,255,0.2);
-}
 
+  font-size: 14px;
+
+  line-height: 1.5;
+}
 .label {
   margin: 0 0 8px;
 
@@ -187,17 +188,17 @@ height: 150px;
 .confirm-btn {
   width: 100%;
 
-  margin-top: 20px;
+  margin-top: 12px;
 
-  padding: 14px;
+  padding: 10px;
 
   border: none;
 
-  border-radius: 14px;
+  border-radius: 12px;
 
   color: white;
 
-  font-size: 16px;
+  font-size: 15px;
 
   cursor: pointer;
 }
@@ -308,7 +309,14 @@ height: 150px;
 
 .namecard img {
   width: 100%;
-  max-height: 260px;
-  object-fit: contain;
+
+  height: 160px;
+
+  object-fit: cover;
+
+  object-position: center;
+
   display: block;
+
+  border-radius: 16px;
 }
