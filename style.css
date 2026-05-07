@@ -112,7 +112,8 @@ height: 150px;
   position: absolute;
 
   top: 24px;
-  right: 32px;
+  left: 32px;
+right: auto;
   width: 320px;
   padding: 14px;
 
@@ -129,7 +130,7 @@ height: 150px;
 
   color: #2f2f38;
 
-  transform: translateX(420px);
+  transform: translateX(-420px);
 
   transition: 0.35s ease;
 
