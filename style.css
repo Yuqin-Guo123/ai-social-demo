@@ -308,8 +308,7 @@ height: 150px;
 
 .namecard img {
   width: 100%;
-  height: 260px;
-  object-fit: cover;
-  object-position: center;
+  max-height: 260px;
+  object-fit: contain;
   display: block;
 }
