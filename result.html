@@ -1,1 +1,288 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>赛后阶段 · AI好友推荐</title>
+  <link rel="stylesheet" href="style.css" />
 
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      font-family: "Hiragino Sans GB", "Heiti SC", "Microsoft YaHei", sans-serif;
+      background: #000;
+    }
+
+    .result-screen {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      background-image: url("./images/结算画面.png");
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      overflow: hidden;
+    }
+
+    .dim {
+      position: absolute;
+      inset: 0;
+      background: rgba(15, 10, 35, 0.35);
+    }
+
+    .result-board {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+
+      width: 720px;
+      padding: 28px;
+      border-radius: 30px;
+
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
+      backdrop-filter: blur(18px);
+
+      color: white;
+      text-shadow: 0 1px 6px rgba(0,0,0,0.35);
+    }
+
+    .result-title {
+      font-size: 30px;
+      font-weight: 900;
+      margin: 0 0 18px;
+      text-align: center;
+    }
+
+    .score-row {
+      display: flex;
+      justify-content: center;
+      gap: 42px;
+      margin-bottom: 22px;
+      font-size: 20px;
+      font-weight: 800;
+    }
+
+    .ai-recommend {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: 18px;
+      align-items: center;
+    }
+
+    .recommend-card {
+      width: 100%;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.35);
+      box-shadow: 0 0 22px rgba(180,160,255,0.2);
+    }
+
+    .recommend-card img {
+      width: 100%;
+      display: block;
+    }
+
+    .analysis-box {
+      padding: 18px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.16);
+      border: 1px solid rgba(255,255,255,0.28);
+    }
+
+    .analysis-box h2 {
+      margin: 0 0 12px;
+      font-size: 22px;
+    }
+
+    .analysis-box p {
+      margin: 8px 0;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .match-rate {
+      margin: 14px 0;
+      font-size: 24px;
+      font-weight: 900;
+      color: #ffe4ff;
+    }
+
+    .action-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 18px;
+    }
+
+    .action-row button {
+      flex: 1;
+      padding: 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,0.4);
+      background: rgba(255,255,255,0.22);
+      color: white;
+      cursor: pointer;
+      font-weight: 800;
+      backdrop-filter: blur(10px);
+    }
+
+    .ai-button {
+      position: absolute;
+      right: 34px;
+      top: 92px;
+      width: 82px;
+      height: 82px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      z-index: 80;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .ai-button img {
+      width: 78px;
+      height: 78px;
+      object-fit: contain;
+      position: relative;
+      z-index: 2;
+      animation: aiFloat 2s ease-in-out infinite;
+    }
+
+    .ai-wave {
+      position: absolute;
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      border: 2px solid rgba(190, 205, 255, 0.85);
+      animation: wavePulse 2s infinite;
+    }
+
+    @keyframes wavePulse {
+      0% { transform: scale(1); opacity: 0.9; }
+      70% { transform: scale(1.55); opacity: 0; }
+      100% { opacity: 0; }
+    }
+
+    @keyframes aiFloat {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+
+    .toast {
+      position: absolute;
+      left: 50%;
+      top: 45%;
+      transform: translate(-50%, -50%);
+      padding: 16px 30px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.22);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.35);
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      text-shadow: 0 1px 5px rgba(0,0,0,0.35);
+      z-index: 100;
+      animation: pop 1.2s ease forwards;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    @keyframes pop {
+      0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+      20% { transform: translate(-50%, -50%) scale(1.08); opacity: 1; }
+      80% { opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="result-screen">
+    <div class="dim"></div>
+
+    <button class="ai-button" id="assistantBtn">
+      <span class="ai-wave"></span>
+      <img src="images/ai助手icon.png" alt="AI助手" />
+    </button>
+
+    <section class="result-board">
+      <h1 class="result-title">赛后结算 · AI关系分析</h1>
+
+      <div class="score-row">
+        <span>胜利</span>
+        <span>15 VS 8</span>
+        <span>MVP：雨果</span>
+      </div>
+
+      <div class="ai-recommend">
+        <div class="recommend-card">
+          <img src="images/夏日名片.png" alt="夏日畅想家">
+        </div>
+
+        <div class="analysis-box">
+          <h2>推荐添加：夏日畅想家</h2>
+
+          <p><b>AI分析：</b>该玩家在本局多次支援你，并与你形成稳定配合。</p>
+          <p><b>互动依据：</b>3次关键支援 / 团战配合积极 / 回复及时。</p>
+          <p><b>关系建议：</b>适合添加好友并作为后续组队对象。</p>
+
+          <div class="match-rate">匹配度：92%</div>
+
+          <div class="action-row">
+            <button id="friendBtn">发送好友申请</button>
+            <button id="teamBtn">邀请下局组队</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="toast hidden" id="toast">操作成功</div>
+  </main>
+
+  <script>
+    const toast = document.getElementById("toast");
+    const friendBtn = document.getElementById("friendBtn");
+    const teamBtn = document.getElementById("teamBtn");
+    const assistantBtn = document.getElementById("assistantBtn");
+
+    function showToast(text) {
+      toast.textContent = text;
+      toast.classList.remove("hidden");
+      toast.style.animation = "none";
+
+      setTimeout(() => {
+        toast.style.animation = "pop 1.2s ease forwards";
+      }, 20);
+
+      setTimeout(() => {
+        toast.classList.add("hidden");
+      }, 1200);
+    }
+
+    friendBtn.addEventListener("click", () => {
+      showToast("✅ 已发送好友申请：期待下次一起排位！");
+    });
+
+    teamBtn.addEventListener("click", () => {
+      showToast("🤝 已发送下局组队邀请");
+    });
+
+    assistantBtn.addEventListener("click", () => {
+      showToast("AI建议：该玩家适合长期组队");
+    });
+  </script>
+</body>
+</html>
